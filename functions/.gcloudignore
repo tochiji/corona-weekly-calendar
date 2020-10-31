@@ -7,6 +7,7 @@
 #   $ gcloud topic gcloudignore
 #
 .gcloudignore
+
 # If you would like to upload your .git directory, .gitignore file or files
 # from your .gitignore file, remove the corresponding line
 # below:
@@ -14,5 +15,8 @@
 .gitignore
 
 *.ts
+.prettirrc.js
+jest.config.js
+tsconfig.json
 
 node_modules
