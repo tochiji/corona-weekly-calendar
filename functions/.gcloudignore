@@ -15,7 +15,9 @@
 .gitignore
 
 *.ts
-.prettirrc.js
+.prettierrc.js
+.eslintrc.js
+.eslintignore
 jest.config.js
 tsconfig.json
 
