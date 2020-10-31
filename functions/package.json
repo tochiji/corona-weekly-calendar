@@ -1,21 +1,35 @@
 {
   "name": "fetch-corona-data",
   "version": "1.0.0",
-  "main": "index.js",
+  "main": "src/index.js",
   "scripts": {
+    "build": "tsc",
+    "deploy": "yarn build;gcloud functions deploy saveCoronaCalendarToGCS --entry-point saveCoronaCalendarToGCS --runtime nodejs12 --trigger-topic saveCoronaCalendarToGCS",
+    "test": "jest --watchAll",
+    "test:ci": "jest",
     "fix": "run-s fix:eslint fix:prettier",
     "fix:eslint": "yarn lint:eslint --fix",
     "fix:prettier": "yarn lint:prettier --write"
   },
   "license": "MIT",
-  "dependencies": {},
+  "dependencies": {
+    "@google-cloud/storage": "^5.4.0",
+    "@types/node-fetch": "^2.5.7",
+    "node-fetch": "^2.6.1"
+  },
   "devDependencies": {
+    "@types/jest": "^26.0.15",
     "@types/node": "^14.14.6",
     "@typescript-eslint/eslint-plugin": "^4.6.0",
     "@typescript-eslint/parser": "^4.6.0",
     "eslint": "^7.12.1",
     "eslint-config-prettier": "^6.15.0",
+    "jest": "^26.6.1",
     "prettier": "^2.1.2",
+    "ts-jest": "^26.4.3",
     "typescript": "^4.0.5"
+  },
+  "jest": {
+    "verbose": true
   }
 }
