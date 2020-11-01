@@ -38,9 +38,11 @@ jobs:
 
       - name: install dependency
         if: steps.yarn-cache-dir-path.outputs.cache-hit != 'true'
-        run: cd functions
-        run: yarn
+        run: |
+          cd functions
+          yarn
 
       - name: Deploy Functions
-        run: cd functions
-        run: yarn deploy
+        run: |
+          cd functions
+          yarn deploy
