@@ -3,6 +3,7 @@ import { Storage } from '@google-cloud/storage';
 
 const BUCKET_NAME = 'corona-open-data';
 const FILE_NAME = 'tokyo-latest';
+const CSV_URL = 'https://stopcovid19.metro.tokyo.lg.jp/data/130001_tokyo_covid19_patients.csv';
 
 export const saveCoronaCalendarToGCS = async (
   message: Message,
@@ -23,9 +24,7 @@ export const saveCoronaCalendarToGCS = async (
 };
 
 export const fetchCoronaJson = async () => {
-  const f = await fetch(
-    'https://stopcovid19.metro.tokyo.lg.jp/data/130001_tokyo_covid19_patients.csv'
-  );
+  const f = await fetch(CSV_URL);
   const res = await f.text();
   const d = res.split('\r\n');
   const coronaJson = csv2json(d);
