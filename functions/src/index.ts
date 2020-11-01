@@ -12,7 +12,19 @@ export const saveCoronaCalendarToGCS = async (
 ) => {
   const res = await fetchCoronaJson();
   const storage = new Storage();
-  const file = await storage.bucket(BUCKET_NAME).file(FILE_NAME);
+
+  const bucket = storage.bucket(BUCKET_NAME);
+  await bucket.setCorsConfiguration([
+    {
+      maxAgeSeconds: 3600,
+      method: ['GET'],
+      origin: ['*'],
+      responseHeader: ['content-type'],
+    },
+  ]);
+
+  const file = bucket.file(FILE_NAME);
+
   await file.save(JSON.stringify(res), { gzip: true });
   await file.setMetadata({
     contentType: 'application/json',
