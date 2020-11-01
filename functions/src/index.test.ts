@@ -1,6 +1,6 @@
 import { fetchCoronaJson } from './index';
 
-test('想定のkeyが存在しているか', async () => {
+test('指定のkeyが存在しているか？', async () => {
   const data = await fetchCoronaJson();
   // expect(data[0]['No']).not.toBeUndefined();
   expect(data[0]['全国地方公共団体コード']).not.toBeUndefined();
