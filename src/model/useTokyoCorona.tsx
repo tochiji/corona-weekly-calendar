@@ -10,8 +10,9 @@ export const CoronaProvider = ({ children }: ProviderProps) => {
   useEffect(() => {
     const handleRequest = async () => {
       setIsLoading(true);
-      const res = ((await fetch(URL)) as unknown) as TokyoCoronaData;
-      setTokyoData(res);
+      const res = await fetch(URL);
+      const tokyoData = (await res.json()) as TokyoCoronaData;
+      setTokyoData(tokyoData);
       setIsLoading(false);
     };
     handleRequest();
