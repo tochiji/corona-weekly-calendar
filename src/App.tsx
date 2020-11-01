@@ -1,24 +1,24 @@
 import React from 'react';
-import logo from './logo.svg';
 import './App.css';
+import { CoronaProvider } from './model/useTokyoCorona';
+import { CalendarBackground } from './components/CalendarBackground/CalendarBackground';
+import { ClipboardButton } from './components/ClipboardButton/ClipboardButton';
+import { DescriptionText } from './components/DescriptionText/DescriptionText';
+import { HeaderTitle } from './components/HeaderTitle/HeaderTitle';
+import { SourceText } from './components/SourceText/SourceText';
 
 function App() {
   return (
     <div className="App">
-      <header className="App-header">
-        <img src={logo} className="App-logo" alt="logo" />
-        <p>
-          Edit <code>src/App.tsx</code> and save to reload.
-        </p>
-        <a
-          className="App-link"
-          href="https://reactjs.org"
-          target="_blank"
-          rel="noopener noreferrer"
-        >
-          Learn React
-        </a>
-      </header>
+      <CoronaProvider>
+        <HeaderTitle />
+        <DescriptionText />
+        <CalendarBackground>
+          aaa
+          <ClipboardButton />
+        </CalendarBackground>
+        <SourceText />
+      </CoronaProvider>
     </div>
   );
 }
