@@ -20,10 +20,15 @@ jobs:
         with:
           node-version: '12.x'
 
+      - name: Get yarn cache directory path
+        id: yarn-cache-dir-path
+        run: echo "::set-output name=dir::$(yarn cache dir)"
+
       - uses: actions/cache@v2
+        id: yarn-cache # use this to check for `cache-hit` (`steps.yarn-cache.outputs.cache-hit != 'true'`)
         with:
-          path: 'functions/node_modules'
-          key: ${{ runner.os }}-modules-${{ hashFiles('functions/yarn.lock') }}
+          path: ${{ steps.yarn-cache-dir-path.outputs.dir }}
+          key: ${{ runner.os }}-yarn-${{ hashFiles('functions/yarn.lock') }}
 
       - uses: GoogleCloudPlatform/github-actions/setup-gcloud@master
         with:
@@ -31,8 +36,12 @@ jobs:
           service_account_email: ci-deploy@corona-weekly-calendar.iam.gserviceaccount.com
           service_account_key: ${{ secrets.GCP_CI_SERVICE_ACCOUNT_KEY }}
 
+      - name: move directory
+        run: cd functions
+
+      - name: install dependency
+        if: steps.yarn-cache-dir-path.outputs.cache-hit != 'true'
+        run: yarn
+
       - name: Deploy Functions
-        run: |
-          cd functions
-          yarn
-          yarn deploy
+        run: yarn deploy
