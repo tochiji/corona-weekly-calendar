@@ -36,7 +36,7 @@ jobs:
           service_account_email: ci-deploy@corona-weekly-calendar.iam.gserviceaccount.com
           service_account_key: ${{ secrets.GCP_CI_SERVICE_ACCOUNT_KEY }}
 
-      - name: install dependency
+      - name: Install dependency
         if: steps.yarn-cache-dir-path.outputs.cache-hit != 'true'
         run: |
           cd functions
