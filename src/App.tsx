@@ -6,6 +6,7 @@ import { ClipboardButton } from './components/ClipboardButton/ClipboardButton';
 import { DescriptionText } from './components/DescriptionText/DescriptionText';
 import { HeaderTitle } from './components/HeaderTitle/HeaderTitle';
 import { SourceText } from './components/SourceText/SourceText';
+import { CoronaWeeklyTable } from './components/CoronaWeeklyTable/CoronaWeeklyTable';
 
 function App() {
   return (
@@ -14,7 +15,7 @@ function App() {
         <HeaderTitle />
         <DescriptionText />
         <CalendarBackground>
-          aaa
+          <CoronaWeeklyTable />
           <ClipboardButton />
         </CalendarBackground>
         <SourceText />

@@ -1,7 +1,10 @@
 import React, { createContext, useState, useContext, useEffect } from 'react';
 
-const CoronaContext = createContext({});
 const URL = 'https://storage.googleapis.com/corona-open-data/tokyo-latest';
+const CoronaContext = createContext({
+  tokyoData: [] as TokyoCoronaData,
+  isLoading: false as boolean,
+});
 
 export const CoronaProvider = ({ children }: ProviderProps) => {
   const [tokyoData, setTokyoData] = useState<TokyoCoronaData>([]);
