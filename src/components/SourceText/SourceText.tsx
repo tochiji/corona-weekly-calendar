@@ -4,7 +4,7 @@ import React from 'react';
 const useStyles = makeStyles(theme => ({
   root: {
     color: 'white',
-    fontSize: 8,
+    fontSize: 10,
     margin: theme.spacing(2, 2, 2, 2),
     textAlign: 'left',
   },
