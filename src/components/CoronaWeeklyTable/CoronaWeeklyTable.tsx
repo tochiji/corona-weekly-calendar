@@ -28,7 +28,7 @@ const useStyles = makeStyles(theme => ({
 
 export const CoronaWeeklyTable = () => {
   const classes = useStyles();
-  const { isLoading, weeks, startWeekOfDays, yobis, daysData } = useCorona();
+  const { isLoading, weeks, yobis, daysData } = useCorona();
 
   if (isLoading)
     return (
