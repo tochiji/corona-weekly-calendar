@@ -1,4 +1,3 @@
-import { eachWeekOfInterval } from 'date-fns';
 import React, {
   createContext,
   useState,
@@ -9,14 +8,12 @@ import React, {
 import Worker from './../worker';
 import {
   CoronaContextType,
-  DaysData,
   Interval,
   ProviderProps,
   TokyoCoronaData,
   WeekStartsOn,
+  WeekTable,
 } from './typing';
-
-const URL = 'https://storage.googleapis.com/corona-open-data/tokyo-latest';
 
 const initInterVal: Interval = {
   start: new Date(),
@@ -29,17 +26,17 @@ const CoronaContext = createContext<CoronaContextType>({
   weeks: [],
   yobis: [],
   interval: initInterVal,
-  tokyoData: [],
-  daysData: {},
+  rawData: [],
+  weekTable: {},
   setStartWeekOfDay: () => undefined,
 });
 
 export const CoronaProvider = ({ children }: ProviderProps) => {
-  const [tokyoData, setTokyoData] = useState<TokyoCoronaData>([]);
+  const [rawData, setRawData] = useState<TokyoCoronaData>([]);
   const [interval, setInterval] = useState<Interval>(initInterVal);
   const [weeks, setWeeks] = useState<Date[]>([]);
   const [startWeekOfDays, setStartWeekOfDay] = useState<WeekStartsOn>(0);
-  const [daysData, setDaysData] = useState<DaysData>({});
+  const [weekTable, setWeekTable] = useState<WeekTable>({});
   const [isLoading, setIsLoading] = useState(true);
 
   const worker = new Worker();
@@ -47,22 +44,14 @@ export const CoronaProvider = ({ children }: ProviderProps) => {
   useEffect(() => {
     const handleRequest = async () => {
       setIsLoading(true);
-      const res = await fetch(URL);
-      const resjson = (await res.json()) as TokyoCoronaData;
-      const { tokyoData, interval } = await worker.initData(resjson);
-      const weeks = eachWeekOfInterval(interval, {
-        weekStartsOn: startWeekOfDays,
-      }).reverse();
-      const daysData = await worker.makeDailyCount({
-        tokyoData,
-        weeks,
+      const { rawData, interval, weeks, weekTable } = await worker.initData({
         startWeekOfDays,
       });
 
       setInterval(interval);
       setWeeks(weeks);
-      setTokyoData(tokyoData);
-      setDaysData(daysData);
+      setRawData(rawData);
+      setWeekTable(weekTable);
       setIsLoading(false);
     };
     handleRequest();
@@ -81,8 +70,8 @@ export const CoronaProvider = ({ children }: ProviderProps) => {
         weeks,
         yobis,
         interval,
-        tokyoData,
-        daysData,
+        rawData,
+        weekTable,
         setStartWeekOfDay,
       }}
     >

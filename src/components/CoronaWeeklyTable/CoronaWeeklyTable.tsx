@@ -28,11 +28,11 @@ const useStyles = makeStyles(theme => ({
 
 export const CoronaWeeklyTable = () => {
   const classes = useStyles();
-  const { isLoading, weeks, yobis, daysData } = useCorona();
+  const { isLoading, weeks, yobis, weekTable } = useCorona();
 
   if (isLoading)
     return (
-      <CircularProgress style={{ margin: '16px 0 30px 0', color: 'white' }} />
+      <CircularProgress style={{ margin: '30px 0 30px 0', color: 'white' }} />
     );
   return (
     <Box
@@ -59,13 +59,13 @@ export const CoronaWeeklyTable = () => {
             return (
               <TableRow key={week}>
                 <TableCell align="right">{format(w, 'MM/dd')}</TableCell>
-                {daysData[week].map((d, d_i) => (
+                {weekTable[week].map((d, d_i) => (
                   <TableCell key={`${w}-${i}-${d_i}`} align="right">
                     {d}
                   </TableCell>
                 ))}
                 <TableCell align="right">
-                  {daysData[week].reduce((a, b) => {
+                  {weekTable[week].reduce((a, b) => {
                     return Number(a) + Number(b);
                   }, 0)}
                 </TableCell>

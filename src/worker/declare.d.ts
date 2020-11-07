@@ -2,16 +2,18 @@ declare module 'comlink-loader!*' {
   class WebpackWorker extends Worker {
     constructor();
 
-    initData(
-      data: import('../model/typing').TokyoCoronaData
-    ): Promise<import('../model/typing').InitWorkerData>;
-
-    makeDailyCount({
-      tokyoData,
-      weeks,
+    async initData({
       startWeekOfDays,
-    }: import('../model/typing').MakeDailyCountProps): Promise<
-      import('../model/typing').DailyCount
+    }: import('../model/typing').InitWorkerDataProps): Promise<
+      import('../model/typing').InitWorkerData
+    >;
+
+    createWeekTable({
+      rawData,
+      interval,
+      startWeekOfDays,
+    }: import('../model/typing').CreateWeekTableProps): Promise<
+      import('../model/typing').CreateWeekTable
     >;
   }
 
