@@ -1,6 +1,7 @@
 import { Button, makeStyles } from '@material-ui/core';
 import React from 'react';
 import AssignmentIcon from '@material-ui/icons/Assignment';
+import { useCorona } from '../../model/useTokyoCorona';
 
 const useStyles = makeStyles(() => ({
   root: {
@@ -13,7 +14,8 @@ const useStyles = makeStyles(() => ({
 
 export const ClipboardButton = () => {
   const classes = useStyles();
-  return (
+  const { isLoading } = useCorona();
+  return !isLoading ? (
     <Button
       variant="contained"
       disableElevation
@@ -22,5 +24,5 @@ export const ClipboardButton = () => {
     >
       クリップボードにコピーする
     </Button>
-  );
+  ) : null;
 };
