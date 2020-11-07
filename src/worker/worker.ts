@@ -53,12 +53,14 @@ export const createWeekTable = ({
   const weekTable = {} as { [key: string]: (number | null)[] };
   weeks.forEach(v => {
     const week = format(v, 'yyyyMMdd');
-    weekTable[week] = [null, null, null, null, null, null, null];
+    weekTable[week] = [null, null, null, null, null, null, null, 0];
   });
   dataWithWeek.forEach(v => {
     const week = format(v.week, 'yyyyMMdd');
     const day = v.dayOfWeek;
+    const SUM_INDEX = 7;
     weekTable[week][day] = Number(weekTable[week][day]) + 1;
+    weekTable[week][SUM_INDEX] = Number(weekTable[week][SUM_INDEX]) + 1;
   });
   return { weeks, weekTable };
 };

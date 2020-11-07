@@ -64,11 +64,6 @@ export const CoronaWeeklyTable = () => {
                     {d}
                   </TableCell>
                 ))}
-                <TableCell align="right">
-                  {weekTable[week].reduce((a, b) => {
-                    return Number(a) + Number(b);
-                  }, 0)}
-                </TableCell>
               </TableRow>
             );
           })}
