@@ -2,9 +2,11 @@ import {
   Box,
   CircularProgress,
   makeStyles,
+  Paper,
   Table,
   TableBody,
   TableCell,
+  TableContainer,
   TableHead,
   TableRow,
 } from '@material-ui/core';
@@ -13,16 +15,34 @@ import React from 'react';
 import { useCorona } from '../../model/useTokyoCorona';
 
 const useStyles = makeStyles(theme => ({
-  table: {
+  root: {
+    width: '100%',
+  },
+  tableContainer: {
     maxWidth: 600,
     margin: theme.spacing(0, 0, 3, 0),
-    '& .MuiTableCell-root': {
+    padding: theme.spacing(1, 2, 2, 2),
+    backgroundColor: 'rgba(255,255,255,0.1)',
+    borderCollapse: 'separate',
+    '& th': {
       padding: '6px 4px 4px 4px',
       color: 'white',
       fontWeight: 'bold',
-      fontSize: 12,
-      borderBottom: '1px solid rgba(255,255,255,0.2)',
+      fontSize: 14,
+      borderBottom: 'none',
     },
+    '& td': {
+      padding: '6px 4px 4px 4px',
+      color: '#222222',
+      fontSize: 14,
+      fontWeight: 'bold',
+      backgroundColor: '#C4C4C4',
+      border: 'none',
+    },
+  },
+  table: {
+    borderCollapse: 'separate',
+    borderSpacing: '2px',
   },
 }));
 
@@ -39,36 +59,40 @@ export const CoronaWeeklyTable = () => {
       display="flex"
       justifyContent="center"
       alignItems="center"
-      style={{ width: '100%' }}
+      className={classes.root}
     >
-      <Table className={classes.table}>
-        <TableHead>
-          <TableRow>
-            <TableCell></TableCell>
-            {yobis.map(v => (
-              <TableCell key={v} align="center">
-                {v}
-              </TableCell>
-            ))}
-            <TableCell align="center">週計</TableCell>
-          </TableRow>
-        </TableHead>
-        <TableBody>
-          {weeks.map((w, i) => {
-            const week = format(w, 'yyyyMMdd');
-            return (
-              <TableRow key={week}>
-                <TableCell align="right">{format(w, 'MM/dd')}</TableCell>
-                {weekTable[week].map((d, d_i) => (
-                  <TableCell key={`${w}-${i}-${d_i}`} align="right">
-                    {d}
+      <TableContainer component={Paper} className={classes.tableContainer}>
+        <Table className={classes.table}>
+          <TableHead>
+            <TableRow>
+              <TableCell></TableCell>
+              {yobis.map(v => (
+                <TableCell key={v} align="center">
+                  {v}
+                </TableCell>
+              ))}
+              <TableCell align="center">週計</TableCell>
+            </TableRow>
+          </TableHead>
+          <TableBody>
+            {weeks.map((w, i) => {
+              const week = format(w, 'yyyyMMdd');
+              return (
+                <TableRow key={week}>
+                  <TableCell align="center" component="th">
+                    {format(w, 'MM/dd')}
                   </TableCell>
-                ))}
-              </TableRow>
-            );
-          })}
-        </TableBody>
-      </Table>
+                  {weekTable[week].map((d, d_i) => (
+                    <TableCell key={`${w}-${i}-${d_i}`} align="right">
+                      {d}
+                    </TableCell>
+                  ))}
+                </TableRow>
+              );
+            })}
+          </TableBody>
+        </Table>
+      </TableContainer>
     </Box>
   );
 };

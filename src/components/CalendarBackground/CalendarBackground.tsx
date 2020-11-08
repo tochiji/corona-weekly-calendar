@@ -4,7 +4,7 @@ import React from 'react';
 const useStyles = makeStyles(theme => ({
   root: {
     width: '100%',
-    background: 'rgba(92, 92, 92, 0.46)',
+    background: 'rgba(0, 0, 0, 0.20)',
     padding: theme.spacing(2, 1, 4, 1),
   },
 }));
