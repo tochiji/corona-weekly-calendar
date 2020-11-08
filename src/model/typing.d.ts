@@ -2,10 +2,9 @@ export type CoronaContextType = {
   isLoading: boolean;
   startWeekOfDays: WeekStartsOn;
   weeks: Date[];
-  yobis: string[];
-  interval: Interval;
-  rawData: TokyoCoronaData;
+  yobiHeader: string[];
   weekTable: WeekTable;
+  weekSumTable: WeekSumTable;
   setStartWeekOfDay: (s: WeekStartsOn) => void;
 };
 
@@ -22,6 +21,7 @@ export type TokyoCoronaData = {
 }[];
 
 export type WeekTable = { [key: string]: (number | null)[] };
+export type WeekSumTable = { [key: string]: number };
 
 export type Interval = {
   start: Date;
@@ -30,9 +30,9 @@ export type Interval = {
 
 export type InitWorkerData = {
   rawData: TokyoCoronaData;
-  interval: Interval;
   weeks: Date[];
   weekTable: WeekTable;
+  weekSumTable: WeekSumTable;
 };
 
 export type InitWorkerDataProps = {

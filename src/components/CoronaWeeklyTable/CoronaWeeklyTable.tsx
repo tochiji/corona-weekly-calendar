@@ -48,7 +48,7 @@ const useStyles = makeStyles(theme => ({
 
 export const CoronaWeeklyTable = () => {
   const classes = useStyles();
-  const { isLoading, weeks, yobis, weekTable } = useCorona();
+  const { isLoading, weeks, yobiHeader, weekTable, weekSumTable } = useCorona();
 
   if (isLoading)
     return (
@@ -66,7 +66,7 @@ export const CoronaWeeklyTable = () => {
           <TableHead>
             <TableRow>
               <TableCell></TableCell>
-              {yobis.map(v => (
+              {yobiHeader.map(v => (
                 <TableCell key={v} align="center">
                   {v}
                 </TableCell>
@@ -75,7 +75,7 @@ export const CoronaWeeklyTable = () => {
             </TableRow>
           </TableHead>
           <TableBody>
-            {weeks.map((w, i) => {
+            {weeks.map(w => {
               const week = format(w, 'yyyyMMdd');
               return (
                 <TableRow key={week}>
@@ -83,10 +83,13 @@ export const CoronaWeeklyTable = () => {
                     {format(w, 'MM/dd')}
                   </TableCell>
                   {weekTable[week].map((d, d_i) => (
-                    <TableCell key={`${w}-${i}-${d_i}`} align="right">
+                    <TableCell key={`${week}-${d_i}`} align="right">
                       {d}
                     </TableCell>
                   ))}
+                  <TableCell key={`${week}-sum`} align="right">
+                    {weekSumTable[week]}
+                  </TableCell>
                 </TableRow>
               );
             })}

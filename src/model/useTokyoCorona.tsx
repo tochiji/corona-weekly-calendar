@@ -8,35 +8,27 @@ import React, {
 import Worker from './../worker';
 import {
   CoronaContextType,
-  Interval,
   ProviderProps,
-  TokyoCoronaData,
   WeekStartsOn,
+  WeekSumTable,
   WeekTable,
 } from './typing';
-
-const initInterVal: Interval = {
-  start: new Date(),
-  end: new Date(),
-};
 
 const CoronaContext = createContext<CoronaContextType>({
   isLoading: false,
   startWeekOfDays: 0,
   weeks: [],
-  yobis: [],
-  interval: initInterVal,
-  rawData: [],
+  yobiHeader: [],
   weekTable: {},
+  weekSumTable: {},
   setStartWeekOfDay: () => undefined,
 });
 
 export const CoronaProvider = ({ children }: ProviderProps) => {
-  const [rawData, setRawData] = useState<TokyoCoronaData>([]);
-  const [interval, setInterval] = useState<Interval>(initInterVal);
   const [weeks, setWeeks] = useState<Date[]>([]);
   const [startWeekOfDays, setStartWeekOfDay] = useState<WeekStartsOn>(0);
   const [weekTable, setWeekTable] = useState<WeekTable>({});
+  const [weekSumTable, setWeekSumTable] = useState<WeekSumTable>({});
   const [isLoading, setIsLoading] = useState(true);
 
   const worker = new Worker();
@@ -44,20 +36,19 @@ export const CoronaProvider = ({ children }: ProviderProps) => {
   useEffect(() => {
     const handleRequest = async () => {
       setIsLoading(true);
-      const { rawData, interval, weeks, weekTable } = await worker.initData({
+      const { weeks, weekTable, weekSumTable } = await worker.initData({
         startWeekOfDays,
       });
 
-      setInterval(interval);
       setWeeks(weeks);
-      setRawData(rawData);
       setWeekTable(weekTable);
+      setWeekSumTable(weekSumTable);
       setIsLoading(false);
     };
     handleRequest();
   }, []);
 
-  const yobis = useMemo(() => {
+  const yobiHeader = useMemo(() => {
     const days = ['日', '月', '火', '水', '木', '金', '土'];
     return [...days, ...days].splice(startWeekOfDays, 7);
   }, [startWeekOfDays]);
@@ -68,10 +59,9 @@ export const CoronaProvider = ({ children }: ProviderProps) => {
         isLoading,
         startWeekOfDays,
         weeks,
-        yobis,
-        interval,
-        rawData,
+        yobiHeader,
         weekTable,
+        weekSumTable,
         setStartWeekOfDay,
       }}
     >

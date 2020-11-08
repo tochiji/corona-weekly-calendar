@@ -26,15 +26,15 @@ export const initData = async ({ startWeekOfDays }: InitWorkerDataProps) => {
     dateSet.add(date);
     return { ...v, date: date };
   });
-
   const interval = { start: min([...dateSet]), end: max([...dateSet]) };
-  const { weeks, weekTable } = createWeekTable({
+
+  const { weeks, weekTable, weekSumTable } = createWeekTable({
     rawData,
     interval,
     startWeekOfDays,
   });
 
-  return { rawData, interval, weeks, weekTable };
+  return { rawData, interval, weeks, weekTable, weekSumTable };
 };
 
 export const createWeekTable = ({
@@ -51,18 +51,21 @@ export const createWeekTable = ({
   }));
 
   const weekTable = {} as { [key: string]: (number | null)[] };
+  const weekSumTable = {} as { [key: string]: number };
+
   weeks.forEach(v => {
     const week = format(v, 'yyyyMMdd');
-    weekTable[week] = [null, null, null, null, null, null, null, 0];
+    weekTable[week] = [null, null, null, null, null, null, null];
+    weekSumTable[week] = 0;
   });
   dataWithWeek.forEach(v => {
     const week = format(v.week, 'yyyyMMdd');
     const day = v.dayOfWeek;
-    const SUM_INDEX = 7;
+
     weekTable[week][day] = Number(weekTable[week][day]) + 1;
-    weekTable[week][SUM_INDEX] = Number(weekTable[week][SUM_INDEX]) + 1;
+    weekSumTable[week] = weekSumTable[week] + 1;
   });
-  return { weeks, weekTable };
+  return { weeks, weekTable, weekSumTable };
 };
 
 const getWeeks = (interval: Interval, startWeekOfDays: WeekStartsOn) => {
