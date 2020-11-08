@@ -7,11 +7,14 @@ import {
   parseISO,
   startOfWeek,
 } from 'date-fns';
+import { mean, standardDeviation } from 'simple-statistics';
 import {
   CreateWeekTableProps,
   InitWorkerDataProps,
   TokyoCoronaData,
   WeekStartsOn,
+  WeekSumTable,
+  WeekTable,
 } from '../model/typing';
 
 const URL = 'https://storage.googleapis.com/corona-open-data/tokyo-latest';
@@ -50,12 +53,12 @@ export const createWeekTable = ({
     dayOfWeek: (getDay(v.date) + 7 - startWeekOfDays) % 7,
   }));
 
-  const weekTable = {} as { [key: string]: (number | null)[] };
-  const weekSumTable = {} as { [key: string]: number };
+  const weekTable = {} as WeekTable;
+  const weekSumTable = {} as WeekSumTable;
 
   weeks.forEach(v => {
     const week = format(v, 'yyyyMMdd');
-    weekTable[week] = [null, null, null, null, null, null, null];
+    weekTable[week] = [0, 0, 0, 0, 0, 0, 0];
     weekSumTable[week] = 0;
   });
   dataWithWeek.forEach(v => {
@@ -65,6 +68,10 @@ export const createWeekTable = ({
     weekTable[week][day] = Number(weekTable[week][day]) + 1;
     weekSumTable[week] = weekSumTable[week] + 1;
   });
+
+  // const allDaysCount = Object.values(weekTable).flat();
+  // console.log(mean(allDaysCount));
+  // console.log(standardDeviation(allDaysCount));
   return { weeks, weekTable, weekSumTable };
 };
 

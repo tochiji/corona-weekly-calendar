@@ -20,7 +20,7 @@ export type TokyoCoronaData = {
   date: Date;
 }[];
 
-export type WeekTable = { [key: string]: (number | null)[] };
+export type WeekTable = { [key: string]: number[] };
 export type WeekSumTable = { [key: string]: number };
 
 export type Interval = {

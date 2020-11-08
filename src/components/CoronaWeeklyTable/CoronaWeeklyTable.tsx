@@ -75,7 +75,7 @@ export const CoronaWeeklyTable = () => {
             </TableRow>
           </TableHead>
           <TableBody>
-            {weeks.map(w => {
+            {weeks.map((w, w_i) => {
               const week = format(w, 'yyyyMMdd');
               return (
                 <TableRow key={week}>
@@ -84,7 +84,7 @@ export const CoronaWeeklyTable = () => {
                   </TableCell>
                   {weekTable[week].map((d, d_i) => (
                     <TableCell key={`${week}-${d_i}`} align="right">
-                      {d}
+                      {(w_i === 0 && d) || w_i !== 0 ? d : null}
                     </TableCell>
                   ))}
                   <TableCell key={`${week}-sum`} align="right">
