@@ -1,4 +1,5 @@
 import {
+  differenceInCalendarDays,
   eachWeekOfInterval,
   format,
   getDay,
@@ -11,6 +12,7 @@ import { mean, standardDeviation } from 'simple-statistics';
 import {
   CreateWeekTableProps,
   InitWorkerDataProps,
+  StatDayProps,
   TokyoCoronaData,
   WeekStartsOn,
   WeekSumTable,
@@ -31,19 +33,43 @@ export const initData = async ({ startWeekOfDays }: InitWorkerDataProps) => {
   });
   const interval = { start: min([...dateSet]), end: max([...dateSet]) };
 
+  const { meanDay, sdDay } = statDay({
+    rawData,
+    interval,
+  });
+
   const { weeks, weekTable, weekSumTable } = createWeekTable({
     rawData,
     interval,
     startWeekOfDays,
+    meanDay,
+    sdDay,
   });
 
   return { rawData, interval, weeks, weekTable, weekSumTable };
+};
+
+const statDay = ({ rawData, interval }: StatDayProps) => {
+  const dayCount = differenceInCalendarDays(interval.end, interval.start) + 1;
+  const days = Array(dayCount).fill(0) as number[];
+
+  rawData.forEach(v => {
+    const idx = differenceInCalendarDays(v.date, interval.start);
+    days[idx] += 1;
+  });
+
+  const meanDay = mean(days);
+  const sdDay = standardDeviation(days);
+
+  return { meanDay, sdDay };
 };
 
 export const createWeekTable = ({
   rawData,
   interval,
   startWeekOfDays,
+  meanDay,
+  sdDay,
 }: CreateWeekTableProps) => {
   const weeks = getWeeks(interval, startWeekOfDays);
 
@@ -58,20 +84,29 @@ export const createWeekTable = ({
 
   weeks.forEach(v => {
     const week = format(v, 'yyyyMMdd');
-    weekTable[week] = [0, 0, 0, 0, 0, 0, 0];
-    weekSumTable[week] = 0;
+    const item = { count: 0, sd: 0 };
+    weekTable[week] = new Array(7).fill(0).map(() => {
+      return { ...item };
+    });
+    console.log(weekTable[week]);
+    weekSumTable[week] = { ...item };
   });
+
   dataWithWeek.forEach(v => {
     const week = format(v.week, 'yyyyMMdd');
     const day = v.dayOfWeek;
 
-    weekTable[week][day] = Number(weekTable[week][day]) + 1;
-    weekSumTable[week] = weekSumTable[week] + 1;
+    weekTable[week][day].count = Number(weekTable[week][day].count) + 1;
+    weekSumTable[week].count = weekSumTable[week].count + 1;
   });
 
-  // const allDaysCount = Object.values(weekTable).flat();
-  // console.log(mean(allDaysCount));
-  // console.log(standardDeviation(allDaysCount));
+  for (const w in weekTable) {
+    weekTable[w].forEach((v, i) => {
+      const cnt = weekTable[w][i].count;
+      weekTable[w][i].sd = Math.floor((cnt - meanDay) / sdDay);
+    });
+  }
+
   return { weeks, weekTable, weekSumTable };
 };
 

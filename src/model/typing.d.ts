@@ -20,8 +20,9 @@ export type TokyoCoronaData = {
   date: Date;
 }[];
 
-export type WeekTable = { [key: string]: number[] };
-export type WeekSumTable = { [key: string]: number };
+export type WeekTable = { [key: string]: CellItem[] };
+export type WeekSumTable = { [key: string]: CellItem };
+export type CellItem = { count: number; sd: number };
 
 export type Interval = {
   start: Date;
@@ -39,6 +40,11 @@ export type InitWorkerDataProps = {
   startWeekOfDays: WeekStartsOn;
 };
 
+export type StatDayProps = {
+  rawData: TokyoCoronaData;
+  interval: Interval;
+};
+
 export type CreateWeekTable = {
   weeks: Date[];
   weekTable: WeekTable;
@@ -48,6 +54,8 @@ export type CreateWeekTableProps = {
   rawData: TokyoCoronaData;
   interval: Interval;
   startWeekOfDays: WeekStartsOn;
+  meanDay: number;
+  sdDay: number;
 };
 
 export type WeekStartsOn = 0 | 1 | 2 | 3 | 4 | 5 | 6;
