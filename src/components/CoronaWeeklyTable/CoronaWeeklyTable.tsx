@@ -36,8 +36,18 @@ const useStyles = makeStyles(theme => ({
       color: '#222222',
       fontSize: 14,
       fontWeight: 'bold',
-      backgroundColor: '#C4C4C4',
+      backgroundColor: '#eeeeee',
       border: 'none',
+      '&[data-sd="1"]': {
+        backgroundColor: '#FFDEB8',
+      },
+      '&[data-sd="2"]': {
+        backgroundColor: '#FF7272',
+      },
+      '&[data-sd="3"]': {
+        backgroundColor: '#200606',
+        color: 'white',
+      },
     },
   },
   table: {
@@ -83,7 +93,11 @@ export const CoronaWeeklyTable = () => {
                     {format(w, 'MM/dd')}
                   </TableCell>
                   {weekTable[week].map((d, d_i) => (
-                    <TableCell key={`${week}-${d_i}`} align="right">
+                    <TableCell
+                      key={`${week}-${d_i}`}
+                      data-sd={d.count >= 300 ? 3 : Math.floor(d.count / 100)}
+                      align="right"
+                    >
                       {(w_i === 0 && d.count) || w_i !== 0 ? d.count : null}
                     </TableCell>
                   ))}
