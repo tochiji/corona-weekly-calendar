@@ -13,6 +13,9 @@ const useStyles = makeStyles(theme => ({
   },
   text: {
     color: 'white',
+    fontWeight: 'bold',
+    fontSize: 18,
+    marginTop: 3,
     marginLeft: 11,
   },
 }));
@@ -27,7 +30,9 @@ export const HeaderTitle = () => {
       className={classes.root}
     >
       <img src={logo} className={classes.logo} alt="logo" />
-      <Typography className={classes.text}>非公式コロナカレンダー</Typography>
+      <Typography className={classes.text}>
+        東京都 非公式コロナカレンダー
+      </Typography>
     </Box>
   );
 };

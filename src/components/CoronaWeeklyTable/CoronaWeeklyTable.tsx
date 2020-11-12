@@ -45,7 +45,7 @@ const useStyles = makeStyles(theme => ({
         backgroundColor: '#FF7272',
       },
       '&[data-sd="3"]': {
-        backgroundColor: '#200606',
+        backgroundColor: '#EA0000',
         color: 'white',
       },
     },
