@@ -15,7 +15,8 @@ const useStyles = makeStyles(() => ({
 export const ClipboardButton = () => {
   const classes = useStyles();
   const { isLoading } = useCorona();
-  return !isLoading ? (
+  const isDisplay = isLoading && false;
+  return isDisplay ? (
     <Button
       variant="contained"
       disableElevation
