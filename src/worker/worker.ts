@@ -88,7 +88,6 @@ export const createWeekTable = ({
     weekTable[week] = new Array(7).fill(0).map(() => {
       return { ...item };
     });
-    console.log(weekTable[week]);
     weekSumTable[week] = { ...item };
   });
 
