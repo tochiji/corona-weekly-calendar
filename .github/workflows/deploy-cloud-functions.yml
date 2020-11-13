@@ -13,9 +13,6 @@ jobs:
     name: Deploy Functions
     runs-on: ubuntu-latest
 
-    env:
-      REGION: us-central1
-
     steps:
       - uses: actions/checkout@v2
 
