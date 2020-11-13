@@ -3,7 +3,6 @@ RUN mkdir -p usr/src/app
 WORKDIR /usr/src/app
 COPY . .
 RUN npm install -g serve
-RUN npm install -g yarn
 RUN yarn
 RUN yarn build
 EXPOSE 8080
