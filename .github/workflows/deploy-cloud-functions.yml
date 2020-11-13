@@ -6,6 +6,7 @@ on:
       - main
     paths:
       - "functions/**"
+      - "!functions/**.test.ts"
 
 jobs:
   build-deploy:
@@ -36,8 +37,8 @@ jobs:
 
       - uses: GoogleCloudPlatform/github-actions/setup-gcloud@master
         with:
-          project_id: corona-weekly-calendar
-          service_account_email: ci-deploy@corona-weekly-calendar.iam.gserviceaccount.com
+          project_id: ${{ secrets.GCP_CI_PROJECT_ID }}
+          service_account_email: ${{ secrets.GCP_CI_SERVICE_ACCOUNT_EMAIL }}
           service_account_key: ${{ secrets.GCP_CI_SERVICE_ACCOUNT_KEY }}
 
       - name: Install dependency  # --prefer-offlineをつけることで、存在する場合はキャッシュを使用する
