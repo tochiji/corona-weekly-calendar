@@ -20,6 +20,7 @@ jobs:
 
     env:
       REGION: asia-northeast1
+      GCP_PROJECT: ${{ secrets.GCP_CI_PROJECT_ID }}
       IMAGE: gcr.io/${{ secrets.GCP_CI_PROJECT_ID }}/corona-calendar:${{ github.sha }}
 
     steps:
@@ -27,7 +28,7 @@ jobs:
 
       - uses: GoogleCloudPlatform/github-actions/setup-gcloud@master
         with:
-          project_id: ${{ secrets.GCP_CI_PROJECT_ID }}
+          project_id: $GCP_PROJECT
           service_account_email: ${{ secrets.GCP_CI_SERVICE_ACCOUNT_EMAIL }}
           service_account_key: ${{ secrets.GCP_CI_SERVICE_ACCOUNT_KEY }}
 
@@ -42,4 +43,4 @@ jobs:
 
       - name: Deploy to Cloud Run
         run: |
-            gcloud run deploy corona-calendar --image $IMAGE --project $GCP_PROJECT --region $GCP_REGION --platform managed --quiet
+            gcloud run deploy corona-calendar --image $IMAGE --project $GCP_PROJECT --region $REGION --platform managed --quiet
