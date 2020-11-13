@@ -7,6 +7,7 @@ import { DescriptionText } from './components/DescriptionText/DescriptionText';
 import { HeaderTitle } from './components/HeaderTitle/HeaderTitle';
 import { SourceText } from './components/SourceText/SourceText';
 import { CoronaWeeklyTable } from './components/CoronaWeeklyTable/CoronaWeeklyTable';
+import { GitHubIcon } from './components/GitHubIcon/GitHubIcon';
 
 function App() {
   return (
@@ -17,8 +18,9 @@ function App() {
         <CalendarBackground>
           <CoronaWeeklyTable />
           <ClipboardButton />
+          <SourceText />
         </CalendarBackground>
-        <SourceText />
+        <GitHubIcon />
       </CoronaProvider>
     </div>
   );

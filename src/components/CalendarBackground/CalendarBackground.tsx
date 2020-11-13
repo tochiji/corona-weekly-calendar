@@ -5,7 +5,7 @@ const useStyles = makeStyles(theme => ({
   root: {
     width: '100%',
     background: 'rgba(0, 0, 0, 0.20)',
-    padding: theme.spacing(2, 1, 4, 1),
+    padding: theme.spacing(2, 1, 2, 1),
   },
 }));
 

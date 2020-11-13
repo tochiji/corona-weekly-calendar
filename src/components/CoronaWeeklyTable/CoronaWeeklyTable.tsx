@@ -20,7 +20,7 @@ const useStyles = makeStyles(theme => ({
   },
   tableContainer: {
     maxWidth: 600,
-    margin: theme.spacing(0, 0, 3, 0),
+    margin: theme.spacing(0, 0, 1, 0),
     padding: theme.spacing(1, 2, 2, 2),
     backgroundColor: 'rgba(255,255,255,0.1)',
     borderCollapse: 'separate',
