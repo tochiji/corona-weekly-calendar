@@ -1,17 +1,8 @@
 name: Deploy Cloud Run
 
 on:
-  push:
-    branches:
-      - main
-    paths-ignore:
-      - "functions/**"
-      - ".vscode/**"
-      - ".github/workflows/deploy-cloud-functions.yml"
-      - "README.md"
-      - "tsconfig.json"
-      - ".prettierrc.js"
-      - ".eslintrc.js"
+  release:
+    types: [created]
 
 jobs:
   build-deploy:
