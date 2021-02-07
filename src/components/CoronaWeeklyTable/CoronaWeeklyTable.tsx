@@ -13,6 +13,7 @@ import {
 import { format } from 'date-fns';
 import React from 'react';
 import { useCorona } from '../../model/useTokyoCorona';
+import { severity } from '../../model/severity';
 
 const useStyles = makeStyles(theme => ({
   root: {
@@ -46,6 +47,10 @@ const useStyles = makeStyles(theme => ({
       },
       '&[data-sd="3"]': {
         backgroundColor: '#EA0000',
+        color: 'white',
+      },
+      '&[data-sd="4"]': {
+        backgroundColor: '#910400',
         color: 'white',
       },
     },
@@ -95,14 +100,16 @@ export const CoronaWeeklyTable = () => {
                   {weekTable[week].map((d, d_i) => (
                     <TableCell
                       key={`${week}-${d_i}`}
-                      data-sd={d.count >= 300 ? 3 : Math.floor(d.count / 100)}
+                      data-sd={severity(d.count)}
                       align="right"
                     >
-                      {(w_i === 0 && d.count) || w_i !== 0 ? d.count : null}
+                      {(w_i === 0 && d.count) || w_i !== 0
+                        ? d.count.toLocaleString()
+                        : null}
                     </TableCell>
                   ))}
                   <TableCell key={`${week}-sum`} align="right">
-                    {weekSumTable[week].count}
+                    {weekSumTable[week].count.toLocaleString()}
                   </TableCell>
                 </TableRow>
               );
