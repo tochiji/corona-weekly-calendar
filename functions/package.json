@@ -4,7 +4,7 @@
   "main": "src/index.js",
   "scripts": {
     "build": "tsc",
-    "deploy": "yarn build;gcloud functions deploy saveCoronaCalendarToGCS --entry-point saveCoronaCalendarToGCS --runtime nodejs12 --trigger-topic saveCoronaCalendarToGCS",
+    "deploy": "yarn build;gcloud functions deploy saveCoronaCalendarToGCS --entry-point saveCoronaCalendarToGCS --runtime nodejs12 --trigger-topic saveCoronaCalendarToGCS --memory=512",
     "test": "jest --watchAll",
     "test:ci": "jest",
     "fix": "run-s fix:eslint fix:prettier",
