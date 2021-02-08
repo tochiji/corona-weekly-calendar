@@ -1,0 +1,33 @@
+name: CI(Linter)
+
+on:
+  push:
+    branches:
+      - main
+  pull_request:
+    branches:
+      - main
+      
+jobs:
+  lint-app:
+    runs-on: ubuntu-latest
+    name: Run ESLint and Prettier
+    steps:
+      - uses: actions/checkout@v2
+      - uses: actions/setup-node@v1
+        with:
+          node-version: '14.x'
+      - run: yarn
+      - run: yarn fix
+  lint-cloud-functions:
+    runs-on: ubuntu-latest
+    name: Run ESLint and Prettier
+    steps:
+      - uses: actions/checkout@v2
+      - uses: actions/setup-node@v1
+        with:
+          node-version: '14.x'
+      - working-directory: ./functions
+      - run: yarn
+      - run: yarn fix
+
