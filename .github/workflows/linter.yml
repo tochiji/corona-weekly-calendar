@@ -32,7 +32,7 @@ jobs:
 
   lint-and-test-cloud-functions:
     runs-on: ubuntu-latest
-    working-directory: ./functions
+    working-directory: functions
     name: Run ESLint and Prettier / Run Test
     steps:
       - uses: actions/checkout@v2
