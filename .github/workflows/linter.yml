@@ -32,7 +32,6 @@ jobs:
 
   lint-and-test-cloud-functions:
     runs-on: ubuntu-latest
-    working-directory: functions
     name: Run ESLint and Prettier / Run Test
     steps:
       - uses: actions/checkout@v2
@@ -43,12 +42,15 @@ jobs:
       - name: Install dependency  # --prefer-offlineをつけることで、存在する場合はキャッシュを使用する
         run: |
           yarn --prefer-offline
+        working-directory: ./functions
 
       - name: Lint
         run: |
           yarn fix
+        working-directory: ./functions
 
       - name: Test
         run: |
           yarn test:ci
+        working-directory: ./functions
 
