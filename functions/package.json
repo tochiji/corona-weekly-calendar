@@ -6,7 +6,7 @@
     "build": "tsc",
     "deploy": "yarn build;gcloud functions deploy saveCoronaCalendarToGCS --entry-point saveCoronaCalendarToGCS --runtime nodejs12 --trigger-topic saveCoronaCalendarToGCS --memory=512",
     "test": "jest --watchAll",
-    "test:ci": "jest",
+    "test:ci": "jest --testTimeout=300000",
     "fix": "yarn fix:eslint; yarn fix:prettier",
     "fix:eslint": "eslint --fix 'src/**/*.{tsx,ts,js}'",
     "fix:prettier": "prettier --write 'src/**/*.{tsx,ts,js}'"
