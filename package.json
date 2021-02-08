@@ -29,7 +29,10 @@
   "scripts": {
     "start": "react-scripts start",
     "build": "react-scripts build",
-    "test": "react-scripts test"
+    "test": "react-scripts test",
+    "fix": "yarn fix:eslint; yarn fix:prettier",
+    "fix:eslint": "eslint --fix 'src/**/*.{tsx,ts,js}'",
+    "fix:prettier": "prettier --write 'src/**/*.{tsx,ts,js}'"
   },
   "eslintConfig": {
     "extends": [
