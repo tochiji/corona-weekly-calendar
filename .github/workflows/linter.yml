@@ -1,4 +1,4 @@
-name: CI(Lint and Test)
+name: CI(Lint)
 
 on:
   push:
@@ -11,7 +11,7 @@ on:
 jobs:
   lint-and-test-app:
     runs-on: ubuntu-latest
-    name: Run ESLint and Prettier / Run Test
+    name: App (Run ESLint and Prettier)
     steps:
       - uses: actions/checkout@v2
       - uses: actions/setup-node@v1
@@ -25,14 +25,10 @@ jobs:
       - name: Lint
         run: |
           yarn fix
-
-      - name: Test
-        run: |
-          yarn test:ci
 
   lint-and-test-cloud-functions:
     runs-on: ubuntu-latest
-    name: Run ESLint and Prettier / Run Test
+    name: Cloud Functions (Run ESLint and Prettier)
     steps:
       - uses: actions/checkout@v2
       - uses: actions/setup-node@v1
@@ -49,8 +45,4 @@ jobs:
           yarn fix
         working-directory: ./functions
 
-      - name: Test
-        run: |
-          yarn test:ci
-        working-directory: ./functions
 
