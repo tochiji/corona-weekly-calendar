@@ -1,4 +1,4 @@
-name: CI(Linter)
+name: CI(Lint and Test)
 
 on:
   push:
@@ -9,26 +9,46 @@ on:
       - main
       
 jobs:
-  lint-app:
+  lint-and-test-app:
     runs-on: ubuntu-latest
-    name: Run ESLint and Prettier
+    name: Run ESLint and Prettier / Run Test
     steps:
       - uses: actions/checkout@v2
       - uses: actions/setup-node@v1
         with:
           node-version: '14.x'
-      - run: yarn
-      - run: yarn fix
+
+      - name: Install dependency  # --prefer-offlineをつけることで、存在する場合はキャッシュを使用する
+        run: |
+          yarn --prefer-offline
       
-  lint-cloud-functions:
+      - name: Lint
+        run: |
+          yarn fix
+
+      - name: Test
+        run: |
+          yarn test:ci
+
+  lint-and-test-cloud-functions:
     runs-on: ubuntu-latest
-    name: Run ESLint and Prettier
+    working-directory: ./functions
+    name: Run ESLint and Prettier / Run Test
     steps:
       - uses: actions/checkout@v2
       - uses: actions/setup-node@v1
         with:
           node-version: '14.x'
-      - working-directory: ./functions
-      - run: yarn
-      - run: yarn fix
+      
+      - name: Install dependency  # --prefer-offlineをつけることで、存在する場合はキャッシュを使用する
+        run: |
+          yarn --prefer-offline
+
+      - name: Lint
+        run: |
+          yarn fix
+
+      - name: Test
+        run: |
+          yarn test:ci
 
