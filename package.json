@@ -17,7 +17,7 @@
     "comlink-loader": "^2.0.0",
     "date-fns": "^2.16.1",
     "eslint": "^7.19.0",
-    "eslint-config-prettier": "^6.15.0",
+    "eslint-config-prettier": "^8.1.0",
     "prettier": "^2.1.2",
     "react": "^17.0.1",
     "react-dom": "^17.0.1",
